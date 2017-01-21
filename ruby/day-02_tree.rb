@@ -6,10 +6,7 @@ class Tree
       puts "wrong structure, can't have more than one value per node"
     end
     @value = hash.keys[0]
-    @children = []
-    hash[@value].each do |value, children|
-      @children.push(Tree.new({value => children}))
-    end
+    @children = hash[@value].map {|value, children| Tree.new({value => children})}
   end
 
   def visit(&block)
