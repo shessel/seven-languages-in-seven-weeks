@@ -13,6 +13,5 @@ numbers.each do |x|
 end
 
 numbers.each_slice(4) do |slice|
-  slice.each {|num| print num.to_s + " "}
-  puts
+  puts slice.join(', ')
 end
