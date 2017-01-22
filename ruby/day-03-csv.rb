@@ -28,11 +28,33 @@ module ActsAsCsv
   end
 end
 
+class CsvRow
+  attr :content
+  def initialize headers, row
+    @content = [headers, row].transpose.to_h
+  end
+
+  def method_missing name
+    @content[name.to_s]
+  end
+end
+
 class RubyCsv
   include ActsAsCsv
   acts_as_csv
+
+  def each
+    csv_contents.each do |row|
+      yield CsvRow.new headers, row
+    end
+  end
 end
 
 ruby_csv = RubyCsv.new
 puts ruby_csv.headers.inspect
 puts ruby_csv.csv_contents.inspect
+puts
+
+ruby_csv.each do |row|
+  puts row.one
+end
