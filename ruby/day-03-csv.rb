@@ -28,7 +28,7 @@ module ActsAsCsv
 
     def each
       csv_contents.each do |row|
-        yield CsvRow.new headers, row
+        yield CsvRow.new(headers, row)
       end
     end
   end
@@ -36,11 +36,11 @@ end
 
 class CsvRow
   attr :content
-  def initialize headers, row
+  def initialize(headers, row)
     @content = [headers, row].transpose.to_h
   end
 
-  def method_missing name
+  def method_missing(name)
     @content[name.to_s]
   end
 end
